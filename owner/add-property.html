@@ -1,27 +1,273 @@
-<h2>Add Property</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prorai8 Owner - Add Property</title>
+  <style>
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:#0b1120;
+      color:white;
+      padding:30px 20px;
+    }
 
-<form id="propertyForm">
+    .wrap{
+      max-width:800px;
+      margin:0 auto;
+      background:#111827;
+      border-radius:16px;
+      padding:24px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    }
 
-<label>Property Address</label>
-<input type="text" id="address" required>
+    h1{
+      margin-top:0;
+      margin-bottom:10px;
+    }
 
-<br><br>
+    p{
+      color:#cbd5e1;
+      line-height:1.6;
+    }
 
-<label>Monthly Rent</label>
-<input type="number" id="rent" required>
+    form{
+      margin-top:24px;
+    }
 
-<br><br>
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
 
-<label>Bedrooms</label>
-<input type="number" id="beds">
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-bottom:16px;
+    }
 
-<br><br>
+    .field.full{
+      grid-column:1 / -1;
+    }
 
-<label>Bathrooms</label>
-<input type="number" id="baths">
+    label{
+      font-weight:700;
+      color:#e5e7eb;
+    }
 
-<br><br>
+    input, select, textarea{
+      width:100%;
+      padding:12px 14px;
+      border-radius:10px;
+      border:1px solid #334155;
+      background:#0f172a;
+      color:white;
+      font-size:14px;
+      box-sizing:border-box;
+    }
 
-<button type="submit">Submit Property</button>
+    textarea{
+      min-height:110px;
+      resize:vertical;
+    }
 
-</form>
+    .actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    button{
+      padding:12px 18px;
+      border:none;
+      border-radius:10px;
+      background:#2563eb;
+      color:white;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    button:hover{
+      background:#1d4ed8;
+    }
+
+    .secondary{
+      display:inline-block;
+      padding:12px 18px;
+      border-radius:10px;
+      background:#1f2937;
+      color:white;
+      text-decoration:none;
+      font-weight:700;
+    }
+
+    .secondary:hover{
+      background:#374151;
+    }
+
+    .success{
+      display:none;
+      margin-top:18px;
+      padding:14px 16px;
+      border-radius:12px;
+      background:#14532d;
+      color:#dcfce7;
+      font-weight:700;
+    }
+
+    @media (max-width:700px){
+      .grid{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Add Property</h1>
+    <p>
+      Submit your property to begin the Prorai8 review process.
+    </p>
+
+    <form id="propertyForm">
+      <div class="grid">
+        <div class="field">
+          <label for="ownerName">Owner Full Name</label>
+          <input type="text" id="ownerName" required />
+        </div>
+
+        <div class="field">
+          <label for="phone">Phone Number</label>
+          <input type="text" id="phone" required />
+        </div>
+
+        <div class="field full">
+          <label for="email">Email</label>
+          <input type="email" id="email" required />
+        </div>
+
+        <div class="field full">
+          <label for="address">Property Address</label>
+          <input type="text" id="address" required />
+        </div>
+
+        <div class="field">
+          <label for="city">City</label>
+          <input type="text" id="city" required />
+        </div>
+
+        <div class="field">
+          <label for="propertyType">Property Type</label>
+          <select id="propertyType" required>
+            <option value="">Select one</option>
+            <option value="House">House</option>
+            <option value="Guest House">Guest House</option>
+            <option value="ADU">ADU</option>
+            <option value="In-Law Unit">In-Law Unit</option>
+            <option value="Studio">Studio</option>
+            <option value="Private Room">Private Room</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="beds">Bedrooms</label>
+          <input type="number" id="beds" min="0" step="1" required />
+        </div>
+
+        <div class="field">
+          <label for="baths">Bathrooms</label>
+          <input type="number" id="baths" min="0" step="0.5" required />
+        </div>
+
+        <div class="field">
+          <label for="rent">Monthly Rent</label>
+          <input type="number" id="rent" min="0" step="1" required />
+        </div>
+
+        <div class="field">
+          <label for="furnished">Furnished?</label>
+          <select id="furnished" required>
+            <option value="">Select one</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="privateEntrance">Private Entrance?</label>
+          <select id="privateEntrance" required>
+            <option value="">Select one</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="privateBathroom">Private Bathroom?</label>
+          <select id="privateBathroom" required>
+            <option value="">Select one</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+
+        <div class="field full">
+          <label for="notes">Notes</label>
+          <textarea id="notes" placeholder="Parking, near hospital, utilities included, private setup, availability, etc."></textarea>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="submit">Submit Property</button>
+        <a class="secondary" href="/admin/property-leads.html">View Admin Leads</a>
+      </div>
+    </form>
+
+    <div id="successMessage" class="success">
+      Property submitted successfully.
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("propertyForm");
+    const successMessage = document.getElementById("successMessage");
+
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
+
+      const property = {
+        ownerName: document.getElementById("ownerName").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        address: document.getElementById("address").value.trim(),
+        city: document.getElementById("city").value.trim(),
+        propertyType: document.getElementById("propertyType").value,
+        beds: document.getElementById("beds").value,
+        baths: document.getElementById("baths").value,
+        rent: document.getElementById("rent").value,
+        furnished: document.getElementById("furnished").value,
+        privateEntrance: document.getElementById("privateEntrance").value,
+        privateBathroom: document.getElementById("privateBathroom").value,
+        notes: document.getElementById("notes").value.trim(),
+        status: "Submitted",
+        createdAt: new Date().toISOString()
+      };
+
+      let leads = JSON.parse(localStorage.getItem("propertyLeads") || "[]");
+      leads.push(property);
+      localStorage.setItem("propertyLeads", JSON.stringify(leads));
+
+      form.reset();
+      successMessage.style.display = "block";
+
+      setTimeout(() => {
+        successMessage.style.display = "none";
+      }, 2500);
+    });
+  </script>
+</body>
+</html>
