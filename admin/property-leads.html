@@ -1,1 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prorai8 Admin - Property Leads</title>
+  <style>
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:#0b1120;
+      color:white;
+      padding:30px 20px;
+    }
 
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+    }
+
+    h1{
+      margin-top:0;
+      margin-bottom:10px;
+    }
+
+    p{
+      color:#cbd5e1;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:24px;
+    }
+
+    .btn{
+      display:inline-block;
+      padding:10px 14px;
+      background:#2563eb;
+      color:white;
+      text-decoration:none;
+      border-radius:10px;
+      font-weight:700;
+    }
+
+    .table-wrap{
+      overflow-x:auto;
+      background:#111827;
+      border-radius:14px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:900px;
+    }
+
+    th, td{
+      padding:14px 16px;
+      border-bottom:1px solid rgba(255,255,255,0.08);
+      text-align:left;
+      font-size:14px;
+    }
+
+    th{
+      background:#172033;
+      color:#e5e7eb;
+    }
+
+    td{
+      color:#cbd5e1;
+    }
+
+    .status{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .submitted{ background:#334155; color:#fff; }
+    .reviewing{ background:#7c3aed; color:#fff; }
+    .listed{ background:#2563eb; color:#fff; }
+    .occupied{ background:#16a34a; color:#fff; }
+    .archived{ background:#6b7280; color:#fff; }
+
+    .empty{
+      padding:20px;
+      background:#111827;
+      border-radius:14px;
+      color:#cbd5e1;
+      margin-top:16px;
+    }
+
+    select{
+      padding:8px 10px;
+      border-radius:8px;
+      border:1px solid #334155;
+      background:#0f172a;
+      color:white;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div>
+        <h1>Prorai8 Admin - Property Leads</h1>
+        <p>Review submitted owner properties and update their status.</p>
+      </div>
+      <a class="btn" href="/owner/add-property.html">Add Test Property</a>
+    </div>
+
+    <div id="tableArea"></div>
+  </div>
+
+  <script>
+    const tableArea = document.getElementById("tableArea");
+    const leads = JSON.parse(localStorage.getItem("propertyLeads") || "[]");
+
+    function getStatusClass(status){
+      const value = (status || "Submitted").toLowerCase();
+      if(value === "submitted") return "submitted";
+      if(value === "reviewing") return "reviewing";
+      if(value === "listed") return "listed";
+      if(value === "occupied") return "occupied";
+      if(value === "archived") return "archived";
+      return "submitted";
+    }
+
+    function renderTable(){
+      const data = JSON.parse(localStorage.getItem("propertyLeads") || "[]");
+
+      if(!data.length){
+        tableArea.innerHTML = `
+          <div class="empty">
+            No property leads yet. Submit one from <b>/owner/add-property.html</b>.
+          </div>
+        `;
+        return;
+      }
+
+      tableArea.innerHTML = `
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Property Address</th>
+                <th>Owner Name</th>
+                <th>Phone</th>
+                <th>Monthly Rent</th>
+                <th>Property Type</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${data.map((item, index) => `
+                <tr>
+                  <td>${item.address || "-"}</td>
+                  <td>${item.ownerName || "-"}</td>
+                  <td>${item.phone || "-"}</td>
+                  <td>$${item.rent || "-"}</td>
+                  <td>${item.propertyType || "-"}</td>
+                  <td>
+                    <select onchange="updateStatus(${index}, this.value)">
+                      <option value="Submitted" ${item.status === "Submitted" ? "selected" : ""}>Submitted</option>
+                      <option value="Reviewing" ${item.status === "Reviewing" ? "selected" : ""}>Reviewing</option>
+                      <option value="Listed" ${item.status === "Listed" ? "selected" : ""}>Listed</option>
+                      <option value="Occupied" ${item.status === "Occupied" ? "selected" : ""}>Occupied</option>
+                      <option value="Archived" ${item.status === "Archived" ? "selected" : ""}>Archived</option>
+                    </select>
+                    <div style="margin-top:8px;">
+                      <span class="status ${getStatusClass(item.status)}">${item.status || "Submitted"}</span>
+                    </div>
+                  </td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function updateStatus(index, newStatus){
+      const data = JSON.parse(localStorage.getItem("propertyLeads") || "[]");
+      if(!data[index]) return;
+      data[index].status = newStatus;
+      localStorage.setItem("propertyLeads", JSON.stringify(data));
+      renderTable();
+    }
+
+    renderTable();
+  </script>
+</body>
+</html>
