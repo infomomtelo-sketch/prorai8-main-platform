@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Available Rentals | Prorai8</title>
+
+<style>
+
+body{
+font-family:Arial, sans-serif;
+background:#0b1424;
+color:white;
+margin:0;
+padding:40px;
+}
+
+h1{
+margin-bottom:30px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:20px;
+}
+
+.card{
+background:#12233b;
+padding:20px;
+border-radius:14px;
+}
+
+.card h3{
+margin-top:0;
+}
+
+.price{
+font-size:20px;
+font-weight:bold;
+color:#60a5fa;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Available Rentals</h1>
+
+<div id="listings" class="grid"></div>
+
+<script>
+
+const listings = JSON.parse(localStorage.getItem("properties") || "[]")
+
+const container = document.getElementById("listings")
+
+if(listings.length === 0){
+container.innerHTML = "<p>No properties listed yet.</p>"
+}
+
+listings.forEach(p=>{
+
+const card = document.createElement("div")
+card.className="card"
+
+card.innerHTML = `
+<h3>${p.address}</h3>
+<div>${p.bedrooms} Bed / ${p.bathrooms} Bath</div>
+<div class="price">$${p.rent} / month</div>
+`
+
+container.appendChild(card)
+
+})
+
+</script>
+
+</body>
+</html>
