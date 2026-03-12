@@ -12,7 +12,6 @@
   <style>
     :root{
       --bg:#08111f;
-      --bg-soft:#0f1b2e;
       --card:#12233b;
       --line:rgba(255,255,255,0.10);
       --text:#eef4ff;
@@ -21,19 +20,15 @@
       --blue-dark:#2563eb;
       --green:#22c55e;
       --shadow:0 24px 60px rgba(0,0,0,0.35);
-      --radius:20px;
       --max:1180px;
     }
 
     *{box-sizing:border-box}
-
-    html{
-      scroll-behavior:smooth;
-    }
+    html{scroll-behavior:smooth}
 
     body{
       margin:0;
-      font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      font-family:Inter, Arial, sans-serif;
       color:var(--text);
       background:
         radial-gradient(1200px 700px at 80% -10%, rgba(59,130,246,0.24), transparent 55%),
@@ -117,7 +112,6 @@
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      gap:8px;
       min-height:46px;
       padding:0 18px;
       border-radius:14px;
@@ -125,7 +119,6 @@
       font-weight:700;
       font-size:15px;
       cursor:pointer;
-      transition:all .18s ease;
     }
 
     .btn-primary{
@@ -405,12 +398,6 @@
       gap:18px;
     }
 
-    .grid-2{
-      display:grid;
-      grid-template-columns:repeat(2, minmax(0, 1fr));
-      gap:18px;
-    }
-
     .card{
       padding:22px;
       border-radius:22px;
@@ -599,8 +586,7 @@
     @media (max-width: 1080px){
       .hero-grid,
       .pricing,
-      .grid-3,
-      .grid-2{
+      .grid-3{
         grid-template-columns:1fr;
       }
 
@@ -654,14 +640,14 @@
 
       <div class="nav-links">
         <a href="#how-it-works">How It Works</a>
-        <a href="/owners.html">Owners</a>
+        <a href="/owner/add-property.html">Owners</a>
         <a href="/pricing.html">Pricing</a>
         <a href="/contact.html">Contact</a>
       </div>
 
       <div class="nav-actions">
         <a class="btn btn-secondary" href="/login.html">Login</a>
-        <a class="btn btn-primary" href="/signup.html">List Your Property</a>
+        <a class="btn btn-primary" href="/owner/add-property.html">List Your Property</a>
       </div>
     </div>
   </div>
@@ -681,7 +667,7 @@
           </p>
 
           <div class="hero-actions">
-            <a class="btn btn-primary" href="/signup.html">List Your Property</a>
+            <a class="btn btn-primary" href="/owner/add-property.html">List Your Property</a>
             <a class="btn btn-secondary" href="#how-it-works">See How It Works</a>
           </div>
 
@@ -853,28 +839,19 @@
           <div class="card">
             <div class="icon">🏠</div>
             <h3>Owner dashboard</h3>
-            <p>
-              A central place for landlords to submit properties, review status, and follow
-              updates without chasing people down.
-            </p>
+            <p>A central place for landlords to submit properties, review status, and follow updates.</p>
           </div>
 
           <div class="card">
             <div class="icon">🧾</div>
             <h3>Property pipeline</h3>
-            <p>
-              Every submitted property moves through a visible workflow so nothing gets lost
-              between intake, review, and leasing progress.
-            </p>
+            <p>Every submitted property moves through a visible workflow so nothing gets lost.</p>
           </div>
 
           <div class="card">
             <div class="icon">⚙️</div>
             <h3>Operations control</h3>
-            <p>
-              The admin side of Prorai8 is designed to manage owner submissions and turn
-              scattered property operations into structured execution.
-            </p>
+            <p>The admin side helps manage owner submissions and turn activity into structured execution.</p>
           </div>
         </div>
       </div>
@@ -884,9 +861,7 @@
       <div class="container">
         <div class="section-head">
           <h2>Simple pricing structure</h2>
-          <p>
-            Clear pricing builds trust. Keep the message straightforward and easy for owners to understand.
-          </p>
+          <p>Clear pricing builds trust. Keep the message straightforward and easy for owners to understand.</p>
         </div>
 
         <div class="pricing">
@@ -934,15 +909,12 @@
         <div class="cta">
           <div>
             <h2>Start with the property pipeline.</h2>
-            <p>
-              Get landlords into the platform, collect property submissions,
-              and manage the workflow clearly.
-            </p>
+            <p>Get landlords into the platform, collect property submissions, and manage the workflow clearly.</p>
           </div>
 
           <div style="display:flex; gap:12px; flex-wrap:wrap;">
-            <a class="btn btn-primary" href="/owner/add-property.html">List Your Property</a>
-            <a class="btn btn-secondary" href="/owners.html">View Owner Page</a>
+            <a class="btn btn-primary" href="/owner/add-property.html">Create Owner Account</a>
+            <a class="btn btn-secondary" href="/admin/property-leads.html">View Admin Leads</a>
           </div>
         </div>
       </div>
@@ -953,7 +925,7 @@
     <div class="container footer">
       <div>© 2026 Prorai8. Rental operations platform.</div>
       <div class="footer-links">
-       <a href="/owner/add-property.html">Owners</a>
+        <a href="/owner/add-property.html">Owners</a>
         <a href="/pricing.html">Pricing</a>
         <a href="/contact.html">Contact</a>
         <a href="/login.html">Login</a>
