@@ -1,82 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Available Rentals | Prorai8</title>
+  <style>
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:#08111f;
+      color:white;
+      padding:30px 20px;
+    }
 
-<title>Available Rentals | Prorai8</title>
+    .wrap{
+      max-width:1200px;
+      margin:0 auto;
+    }
 
-<style>
+    .topnav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:24px;
+    }
 
-body{
-font-family:Arial, sans-serif;
-background:#0b1424;
-color:white;
-margin:0;
-padding:40px;
-}
+    .topnav a{
+      display:inline-block;
+      padding:10px 14px;
+      border-radius:10px;
+      background:#1f2937;
+      color:white;
+      text-decoration:none;
+      font-weight:700;
+    }
 
-h1{
-margin-bottom:30px;
-}
+    .topnav a:hover{
+      background:#374151;
+    }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:20px;
-}
+    h1{
+      margin:0 0 10px;
+      font-size:42px;
+    }
 
-.card{
-background:#12233b;
-padding:20px;
-border-radius:14px;
-}
+    .sub{
+      color:#cbd5e1;
+      margin-bottom:30px;
+      line-height:1.6;
+    }
 
-.card h3{
-margin-top:0;
-}
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+      gap:20px;
+    }
 
-.price{
-font-size:20px;
-font-weight:bold;
-color:#60a5fa;
-}
+    .card{
+      background:#111827;
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 12px 30px rgba(0,0,0,0.30);
+    }
 
-</style>
+    .photo{
+      height:180px;
+      background:linear-gradient(135deg,#1d4ed8,#60a5fa);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:18px;
+      font-weight:700;
+      color:white;
+    }
+
+    .content{
+      padding:20px;
+    }
+
+    .address{
+      font-size:22px;
+      font-weight:800;
+      margin-bottom:6px;
+    }
+
+    .city{
+      color:#94a3b8;
+      margin-bottom:14px;
+    }
+
+    .details{
+      color:#cbd5e1;
+      line-height:1.8;
+      font-size:14px;
+      margin-bottom:14px;
+    }
+
+    .price{
+      font-size:24px;
+      font-weight:800;
+      color:#60a5fa;
+      margin-bottom:16px;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      display:inline-block;
+      padding:10px 14px;
+      border-radius:10px;
+      text-decoration:none;
+      font-weight:700;
+    }
+
+    .btn-primary{
+      background:#2563eb;
+      color:white;
+    }
+
+    .btn-secondary{
+      background:#1f2937;
+      color:white;
+    }
+
+    .empty{
+      background:#111827;
+      border-radius:16px;
+      padding:20px;
+      color:#cbd5e1;
+    }
+  </style>
 </head>
-
 <body>
+  <div class="wrap">
+    <div class="topnav">
+      <a href="/">← Back to Home</a>
+      <a href="/owner/add-property.html">+ Add Property</a>
+      <a href="/admin/property-leads.html">Admin Leads</a>
+    </div>
 
-<h1>Available Rentals</h1>
+    <h1>Available Rentals</h1>
+    <div class="sub">
+      Browse available Prorai8 properties.
+    </div>
 
-<div id="listings" class="grid"></div>
+    <div id="listings" class="grid"></div>
+  </div>
 
-<script>
+  <script>
+    const listings = JSON.parse(localStorage.getItem("propertyLeads") || "[]");
+    const container = document.getElementById("listings");
 
-const listings = JSON.parse(localStorage.getItem("properties") || "[]")
+    const activeListings = listings.filter(item =>
+      item.status === "Listed" || item.status === "Occupied" || item.status === "Submitted" || item.status === "Reviewing"
+    );
 
-const container = document.getElementById("listings")
+    if(activeListings.length === 0){
+      container.innerHTML = `<div class="empty">No properties listed yet.</div>`;
+    } else {
+      activeListings.forEach(p => {
+        const card = document.createElement("div");
+        card.className = "card";
 
-if(listings.length === 0){
-container.innerHTML = "<p>No properties listed yet.</p>"
-}
+        card.innerHTML = `
+          <div class="photo">Prorai8 Property</div>
+          <div class="content">
+            <div class="address">${p.address || "No address"}</div>
+            <div class="city">${p.city || ""}</div>
 
-listings.forEach(p=>{
+            <div class="details">
+              <div><b>Type:</b> ${p.propertyType || "-"}</div>
+              <div><b>Bedrooms:</b> ${p.beds || "-"}</div>
+              <div><b>Bathrooms:</b> ${p.baths || "-"}</div>
+              <div><b>Furnished:</b> ${p.furnished || "-"}</div>
+              <div><b>Private Entrance:</b> ${p.privateEntrance || "-"}</div>
+              <div><b>Private Bathroom:</b> ${p.privateBathroom || "-"}</div>
+            </div>
 
-const card = document.createElement("div")
-card.className="card"
+            <div class="price">$${p.rent || "-"} / month</div>
 
-card.innerHTML = `
-<h3>${p.address}</h3>
-<div>${p.bedrooms} Bed / ${p.bathrooms} Bath</div>
-<div class="price">$${p.rent} / month</div>
-`
+            <div class="actions">
+              <a class="btn btn-primary" href="/contact.html">Request Info</a>
+              <a class="btn btn-secondary" href="/owner/add-property.html">List Similar Property</a>
+            </div>
+          </div>
+        `;
 
-container.appendChild(card)
-
-})
-
-</script>
-
+        container.appendChild(card);
+      });
+    }
+  </script>
 </body>
 </html>
