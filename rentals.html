@@ -157,9 +157,8 @@
     const container = document.getElementById("listings");
 
     const activeListings = listings.filter(item =>
-      item.status === "Listed" || item.status === "Occupied" || item.status === "Submitted" || item.status === "Reviewing"
-    );
-
+    item.status === "Listed"
+  );
     if(activeListings.length === 0){
       container.innerHTML = `<div class="empty">No properties listed yet.</div>`;
     } else {
@@ -181,9 +180,8 @@
               <div><b>Private Entrance:</b> ${p.privateEntrance || "-"}</div>
               <div><b>Private Bathroom:</b> ${p.privateBathroom || "-"}</div>
             </div>
-
+          
             <div class="price">$${p.rent || "-"} / month</div>
-
             <div class="actions">
               <a class="btn btn-primary" href="/contact.html">Request Info</a>
               <a class="btn btn-secondary" href="/owner/add-property.html">List Similar Property</a>
