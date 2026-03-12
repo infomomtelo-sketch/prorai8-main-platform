@@ -14,7 +14,7 @@
     }
 
     .wrap{
-      max-width:1100px;
+      max-width:1200px;
       margin:0 auto;
     }
 
@@ -56,7 +56,7 @@
     table{
       width:100%;
       border-collapse:collapse;
-      min-width:900px;
+      min-width:1100px;
     }
 
     th, td{
@@ -64,6 +64,7 @@
       border-bottom:1px solid rgba(255,255,255,0.08);
       text-align:left;
       font-size:14px;
+      vertical-align:top;
     }
 
     th{
@@ -103,6 +104,11 @@
       border:1px solid #334155;
       background:#0f172a;
       color:white;
+    }
+
+    .small{
+      font-size:12px;
+      color:#94a3b8;
     }
   </style>
 </head>
@@ -150,21 +156,33 @@
             <thead>
               <tr>
                 <th>Property Address</th>
-                <th>Owner Name</th>
-                <th>Phone</th>
+                <th>Owner</th>
+                <th>Contact</th>
+                <th>Details</th>
                 <th>Monthly Rent</th>
-                <th>Property Type</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
               ${data.map((item, index) => `
                 <tr>
-                  <td>${item.address || "-"}</td>
-                  <td>${item.ownerName || "-"}</td>
+                  <td>
+                    <b>${item.address || "-"}</b><br>
+                    <span class="small">${item.city || "-"}</span>
+                  </td>
+                  <td>
+                    ${item.ownerName || "-"}<br>
+                    <span class="small">${item.email || "-"}</span>
+                  </td>
                   <td>${item.phone || "-"}</td>
+                  <td>
+                    ${item.propertyType || "-"}<br>
+                    <span class="small">
+                      Beds: ${item.beds || "-"} | Baths: ${item.baths || "-"}<br>
+                      Furnished: ${item.furnished || "-"} | Private Entrance: ${item.privateEntrance || "-"} | Private Bath: ${item.privateBathroom || "-"}
+                    </span>
+                  </td>
                   <td>$${item.rent || "-"}</td>
-                  <td>${item.propertyType || "-"}</td>
                   <td>
                     <select onchange="updateStatus(${index}, this.value)">
                       <option value="Submitted" ${item.status === "Submitted" ? "selected" : ""}>Submitted</option>
