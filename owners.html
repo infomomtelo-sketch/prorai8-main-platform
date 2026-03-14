@@ -1,12 +1,941 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=/owner/add-property.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Owners | Prorai8</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Prorai8 for Owners | Guided Property Operations</title>
+  <meta name="description" content="Prorai8 helps property owners manage, market, screen applicants, and operate rentals with guided AI-powered workflows." />
+  <style>
+    :root{
+      --bg:#f8fbff;
+      --panel:#ffffff;
+      --panel-soft:#f8fafc;
+      --text:#0f172a;
+      --muted:#64748b;
+      --line:#e2e8f0;
+      --brand:#2563eb;
+      --brand-dark:#1d4ed8;
+      --dark:#0f172a;
+      --success:#16a34a;
+      --warning:#f59e0b;
+      --shadow:0 20px 50px rgba(2,6,23,.10);
+      --radius:24px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color:var(--text);
+      background:linear-gradient(180deg,#eef4ff 0%, #f7fbff 40%, #ffffff 100%);
+    }
+
+    a{text-decoration:none;color:inherit}
+    button,input,select,textarea{font:inherit}
+
+    .container{
+      width:min(1180px, calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:100;
+      backdrop-filter:blur(10px);
+      background:rgba(255,255,255,.84);
+      border-bottom:1px solid rgba(226,232,240,.9);
+    }
+
+    .nav-inner{
+      min-height:76px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+    }
+
+    .brand-mark{
+      width:40px;
+      height:40px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      color:#fff;
+      font-weight:900;
+      background:linear-gradient(135deg,var(--brand),#60a5fa);
+      box-shadow:0 10px 24px rgba(37,99,235,.28);
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .nav-links a{
+      padding:10px 14px;
+      border-radius:999px;
+      color:#334155;
+      font-weight:600;
+    }
+
+    .nav-links a:hover{
+      background:#eff6ff;
+      color:var(--brand);
+    }
+
+    .nav-cta{
+      background:var(--brand);
+      color:#fff !important;
+      box-shadow:0 10px 24px rgba(37,99,235,.20);
+    }
+
+    .hero{
+      padding:44px 0 26px;
+    }
+
+    .hero-wrap{
+      display:grid;
+      grid-template-columns:1.12fr .88fr;
+      gap:24px;
+      align-items:stretch;
+    }
+
+    .hero-main{
+      background:linear-gradient(180deg,#0f172a 0%, #162237 100%);
+      color:#fff;
+      border-radius:32px;
+      padding:34px;
+      box-shadow:0 28px 60px rgba(15,23,42,.22);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero-main::after{
+      content:"";
+      position:absolute;
+      right:-80px;
+      bottom:-80px;
+      width:220px;
+      height:220px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(96,165,250,.30), transparent 70%);
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border-radius:999px;
+      padding:8px 12px;
+      background:rgba(255,255,255,.08);
+      color:#dbeafe;
+      font-size:13px;
+      font-weight:800;
+    }
+
+    h1{
+      margin:18px 0 12px;
+      font-size:clamp(36px,5vw,60px);
+      line-height:1.02;
+      letter-spacing:-1.7px;
+    }
+
+    .hero-main p{
+      margin:0;
+      color:#cbd5e1;
+      font-size:18px;
+      line-height:1.65;
+      max-width:700px;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:24px;
+    }
+
+    .btn{
+      min-height:50px;
+      padding:0 18px;
+      border:none;
+      border-radius:16px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg,#3b82f6,#2563eb);
+      color:#fff;
+      box-shadow:0 14px 30px rgba(37,99,235,.28);
+    }
+
+    .btn-primary:hover{transform:translateY(-1px)}
+    .btn-secondary{
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.14);
+    }
+
+    .hero-stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-top:24px;
+    }
+
+    .stat{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:22px;
+      margin-bottom:4px;
+    }
+
+    .stat span{
+      color:#cbd5e1;
+      font-size:13px;
+    }
+
+    .hero-side{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:30px;
+      padding:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .hero-side h2{
+      margin:0 0 8px;
+      font-size:28px;
+      letter-spacing:-.7px;
+    }
+
+    .hero-side p{
+      margin:0 0 18px;
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .checklist{
+      display:grid;
+      gap:12px;
+      margin-top:16px;
+    }
+
+    .check-item{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      padding:14px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#f8fbff;
+    }
+
+    .check-icon{
+      width:28px;
+      height:28px;
+      border-radius:999px;
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
+      background:#dcfce7;
+      color:#166534;
+      font-weight:900;
+    }
+
+    .section{
+      padding:30px 0 8px;
+    }
+
+    .section-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+
+    .section-head h3{
+      margin:0;
+      font-size:30px;
+      letter-spacing:-.8px;
+    }
+
+    .section-head p{
+      margin:6px 0 0;
+      color:var(--muted);
+      line-height:1.7;
+      max-width:760px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:16px;
+    }
+
+    .card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+
+    .card h4{
+      margin:12px 0 8px;
+      font-size:21px;
+      letter-spacing:-.3px;
+    }
+
+    .card p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .icon{
+      width:52px;
+      height:52px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      background:#eff6ff;
+      font-size:24px;
+    }
+
+    .steps{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+    }
+
+    .step{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:20px;
+      position:relative;
+    }
+
+    .step-num{
+      width:38px;
+      height:38px;
+      border-radius:999px;
+      background:var(--brand);
+      color:#fff;
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      margin-bottom:16px;
+      box-shadow:0 10px 20px rgba(37,99,235,.20);
+    }
+
+    .step h4{
+      margin:0 0 8px;
+      font-size:20px;
+    }
+
+    .step p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .highlight-wrap{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      align-items:stretch;
+    }
+
+    .dark-panel{
+      background:linear-gradient(180deg,#0f172a,#162237);
+      color:#fff;
+      border-radius:28px;
+      padding:26px;
+      box-shadow:0 28px 60px rgba(15,23,42,.22);
+    }
+
+    .dark-panel h4{
+      margin:0 0 12px;
+      font-size:28px;
+      letter-spacing:-.7px;
+    }
+
+    .dark-panel p{
+      margin:0;
+      color:#cbd5e1;
+      line-height:1.7;
+    }
+
+    .dark-list{
+      display:grid;
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .dark-list div{
+      padding:14px 16px;
+      border-radius:18px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      color:#e2e8f0;
+    }
+
+    .form-card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .form-card h4{
+      margin:0 0 8px;
+      font-size:28px;
+      letter-spacing:-.7px;
+    }
+
+    .form-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+    }
+
+    .field{
+      display:grid;
+      gap:8px;
+    }
+
+    .field.full{
+      grid-column:1 / -1;
+    }
+
+    .field label{
+      font-size:14px;
+      font-weight:700;
+      color:#334155;
+    }
+
+    .field input,
+    .field select,
+    .field textarea{
+      width:100%;
+      min-height:52px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:#fff;
+      padding:0 14px;
+      outline:none;
+    }
+
+    .field textarea{
+      min-height:120px;
+      padding:14px;
+      resize:vertical;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus{
+      border-color:#93c5fd;
+      box-shadow:0 0 0 4px rgba(37,99,235,.08);
+    }
+
+    .note{
+      margin-top:14px;
+      padding:14px 16px;
+      background:#f8fbff;
+      border:1px solid var(--line);
+      border-radius:16px;
+      color:#475569;
+      line-height:1.7;
+      font-size:14px;
+    }
+
+    .footer{
+      padding:36px 0 60px;
+      color:#64748b;
+      font-size:14px;
+    }
+
+    .footer-box{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    @media (max-width: 1024px){
+      .hero-wrap,
+      .grid-3,
+      .grid-2,
+      .steps,
+      .highlight-wrap{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 720px){
+      .nav-inner{
+        min-height:auto;
+        padding:14px 0;
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .hero-stats,
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-main,
+      .hero-side,
+      .card,
+      .step,
+      .dark-panel,
+      .form-card,
+      .footer-box{
+        border-radius:22px;
+      }
+
+      h1{
+        font-size:40px;
+      }
+    }
+  </style>
 </head>
-<body style="font-family:Arial,sans-serif;padding:40px;background:#0b1120;color:white;">
-  Redirecting to <a href="/owner/add-property.html" style="color:#60a5fa;">Owner Property Form</a>...
+<body>
+
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="/">
+        <div class="brand-mark">P8</div>
+        <div>Prorai8</div>
+      </a>
+
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/roi.html">ROI Calculator</a>
+        <a href="/rentals.html">Rentals</a>
+        <a href="/owners.html">Owners</a>
+        <a href="/legal/">Legal</a>
+        <a class="nav-cta" href="#owner-form">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container hero-wrap">
+      <section class="hero-main">
+        <div class="eyebrow">Prorai8 for Owners • Guided operations</div>
+        <h1>Manage, market, and grow your rental with one guided system.</h1>
+        <p>
+          Prorai8 is designed for owners who want more than a listing page. From pricing guidance
+          and property marketing to applications, screening, payments, accounting, and ongoing
+          operations, the workflow is built to keep everything moving inside one platform.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#owner-form">List Your Property</a>
+          <a class="btn btn-secondary" href="#how-it-works">See How It Works</a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat">
+            <strong>Guided setup</strong>
+            <span>Owner onboarding without confusion</span>
+          </div>
+          <div class="stat">
+            <strong>Application flow</strong>
+            <span>Screening, approvals, and documents</span>
+          </div>
+          <div class="stat">
+            <strong>Operations layer</strong>
+            <span>Payments, tracking, and reporting</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="hero-side">
+        <h2>What owners need most</h2>
+        <p>
+          The goal is not just to post a property. The goal is to help owners run the entire rental
+          process with less friction and better visibility.
+        </p>
+
+        <div class="checklist">
+          <div class="check-item">
+            <div class="check-icon">✓</div>
+            <div>
+              <strong>Guided property onboarding</strong><br>
+              Add your property, choose a strategy, and start with a clear path.
+            </div>
+          </div>
+
+          <div class="check-item">
+            <div class="check-icon">✓</div>
+            <div>
+              <strong>Marketing support</strong><br>
+              Present the listing professionally and prepare it for broader distribution.
+            </div>
+          </div>
+
+          <div class="check-item">
+            <div class="check-icon">✓</div>
+            <div>
+              <strong>Application management</strong><br>
+              Collect renter information, review status, and organize the approval process.
+            </div>
+          </div>
+
+          <div class="check-item">
+            <div class="check-icon">✓</div>
+            <div>
+              <strong>Operational visibility</strong><br>
+              Track rent, tenant flow, and performance from one dashboard direction.
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" id="how-it-works">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h3>How Prorai8 works for owners</h3>
+            <p>
+              The system should guide the owner through a complete lifecycle, from property setup to
+              active rental operations. This first version shows the logic clearly and gives owners a
+              simple place to start.
+            </p>
+          </div>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <h4>Add property details</h4>
+            <p>
+              Enter the address, property type, rent target, and operational goals so the system
+              can understand the listing.
+            </p>
+          </div>
+
+          <div class="step">
+            <div class="step-num">2</div>
+            <h4>Choose your strategy</h4>
+            <p>
+              Long-term lease, executive stay, travel nurse housing, or a hybrid rental strategy
+              based on your market.
+            </p>
+          </div>
+
+          <div class="step">
+            <div class="step-num">3</div>
+            <h4>Review applicants</h4>
+            <p>
+              Keep screening, background checks, approvals, and documentation inside the platform
+              instead of scattered across email threads.
+            </p>
+          </div>
+
+          <div class="step">
+            <div class="step-num">4</div>
+            <h4>Operate and track</h4>
+            <p>
+              Stay inside Prorai8 for payments, records, accounting visibility, and the ongoing
+              renter workflow.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h3>Owner modules Prorai8 can support</h3>
+            <p>
+              This is where Prorai8 moves beyond listings and becomes a guided owner operating
+              system.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card">
+            <div class="icon">🏠</div>
+            <h4>Property setup</h4>
+            <p>
+              Guided onboarding for address, unit details, pricing goals, property photos, and
+              target rental strategy.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">📣</div>
+            <h4>Marketing flow</h4>
+            <p>
+              Listing presentation, visibility management, lead capture, and owner-focused messaging
+              that makes the property feel ready.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">🧾</div>
+            <h4>Applications</h4>
+            <p>
+              Collect renter submissions, income details, references, and application statuses in a
+              cleaner review process.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">🛡️</div>
+            <h4>Background checks</h4>
+            <p>
+              Prepare the workflow for screening, identity checks, and approval steps inside one
+              guided path.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">💳</div>
+            <h4>Payments</h4>
+            <p>
+              Move application fees, deposits, rent collection, and later renewals through the
+              platform flow.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">📊</div>
+            <h4>Accounting visibility</h4>
+            <p>
+              Keep performance, income, expenses, and property-level reporting visible for owners
+              who want clarity.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container highlight-wrap">
+        <div class="dark-panel">
+          <h4>Why this matters</h4>
+          <p>
+            If Prorai8 only introduces owners and renters, they can easily go around the platform.
+            But when the platform handles applications, approvals, records, and payments, staying
+            inside becomes the easier and safer path.
+          </p>
+
+          <div class="dark-list">
+            <div>Keep application intake inside Prorai8</div>
+            <div>Delay direct contact until the process reaches the right stage</div>
+            <div>Use guided steps for approvals, payments, and operational records</div>
+            <div>Make the platform useful after the match, not only before it</div>
+          </div>
+        </div>
+
+        <div class="form-card" id="owner-form">
+          <h4>Start your owner intake</h4>
+          <p>
+            This form is the first entry point for owner onboarding. It can later connect to email,
+            CRM, database storage, or a full dashboard flow.
+          </p>
+
+          <form action="https://formsubmit.co/contact@prorai8.com" method="POST">
+            <input type="hidden" name="_subject" value="New Owner Intake from Prorai8 Owners Page">
+            <input type="hidden" name="_captcha" value="false">
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="fullName">Full name</label>
+                <input id="fullName" name="Full Name" type="text" placeholder="Owner full name" required>
+              </div>
+
+              <div class="field">
+                <label for="email">Email address</label>
+                <input id="email" name="Email" type="email" placeholder="owner@email.com" required>
+              </div>
+
+              <div class="field">
+                <label for="phone">Phone number</label>
+                <input id="phone" name="Phone" type="tel" placeholder="(555) 555-5555">
+              </div>
+
+              <div class="field">
+                <label for="propertyType">Property type</label>
+                <select id="propertyType" name="Property Type">
+                  <option value="">Select property type</option>
+                  <option>Single-family home</option>
+                  <option>Apartment</option>
+                  <option>Private room</option>
+                  <option>ADU / guest unit</option>
+                  <option>Multi-unit</option>
+                  <option>Other</option>
+                </select>
+              </div>
+
+              <div class="field full">
+                <label for="address">Property address</label>
+                <input id="address" name="Property Address" type="text" placeholder="Street address, city, state">
+              </div>
+
+              <div class="field">
+                <label for="strategy">Preferred strategy</label>
+                <select id="strategy" name="Preferred Strategy">
+                  <option value="">Select a strategy</option>
+                  <option>Long-term lease</option>
+                  <option>Mid-term executive stay</option>
+                  <option>Travel nurse housing</option>
+                  <option>Hybrid / flexible model</option>
+                  <option>Not sure yet</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="rentGoal">Target monthly rent</label>
+                <input id="rentGoal" name="Target Monthly Rent" type="text" placeholder="$2,200">
+              </div>
+
+              <div class="field full">
+                <label for="needs">What do you want help with?</label>
+                <textarea id="needs" name="Owner Needs" placeholder="Examples: listing setup, marketing, renter applications, background checks, rent collection, accounting visibility, executive stays, travel nurse housing..."></textarea>
+              </div>
+            </div>
+
+            <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;">
+              <button class="btn btn-primary" type="submit">Submit Owner Intake</button>
+              <a class="btn" href="/roi.html" style="border:1px solid var(--line);background:#fff;">Open ROI Calculator</a>
+            </div>
+
+            <div class="note">
+              This intake form currently sends submissions to your Prorai8 email routing setup. Later,
+              we can upgrade it to store owner records in a real database and connect it to a full
+              owner dashboard.
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h3>What makes Prorai8 different for owners</h3>
+            <p>
+              Most platforms stop at exposure. Prorai8 is being shaped as a guided system that can
+              help owners move from listing to application to operations with more control.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <div class="icon">🧠</div>
+            <h4>Guided, not overwhelming</h4>
+            <p>
+              The owner experience should feel step-by-step instead of technical or chaotic. That is
+              especially important for owners who are not professional operators.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">🔒</div>
+            <h4>Designed to keep activity inside the platform</h4>
+            <p>
+              Applications, screening, approvals, and payments can all be structured inside the
+              Prorai8 workflow to reduce off-platform leakage.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">📍</div>
+            <h4>Built for market-specific strategies</h4>
+            <p>
+              Owners can align properties with long-term, mid-term, executive, or travel nurse
+              demand instead of forcing one generic rental model.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">🚀</div>
+            <h4>Ready to expand later</h4>
+            <p>
+              This page can later connect to dashboards, applicant pipelines, payment tools,
+              accounting exports, and maintenance workflows.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-box">
+        <div>
+          <strong style="display:block;color:#0f172a;margin-bottom:6px;">Prorai8 for Owners</strong>
+          Guided property operations for owners who want more than a listing site.
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="/" class="btn" style="min-height:42px;border:1px solid var(--line);background:#fff;">Back to Home</a>
+          <a href="#owner-form" class="btn btn-primary" style="min-height:42px;">Start Intake</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
 </body>
 </html>
