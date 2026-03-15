@@ -341,7 +341,29 @@ a {
 .site-footer a:hover {
   color: #ffffff;
 }
+/* FORM FIELDS */
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid #334155;
+  background: #0b1530;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 1.5;
+}
 
+input::placeholder,
+textarea::placeholder {
+  color: #94a3b8;
+}
+
+textarea {
+  min-height: 140px;
+  resize: vertical;
+}
 /* RESPONSIVE */
 @media (max-width: 900px) {
   .hero-grid,
@@ -384,5 +406,38 @@ a {
   .hero-actions,
   .owner-actions {
     width: 100%;
+  }
+}
+/* FORM STYLING */
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid #334155;
+  background: #0b1530;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #94a3b8;
+}
+
+textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+/* MOBILE FIX FOR NOTES BOX */
+
+@media (max-width: 640px) {
+  textarea {
+    min-height: 120px;
+    padding: 14px;
   }
 }
