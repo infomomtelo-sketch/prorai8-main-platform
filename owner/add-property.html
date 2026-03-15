@@ -21,7 +21,8 @@
       padding:24px;
       box-shadow:0 10px 30px rgba(0,0,0,0.35);
     }
-      .topnav{
+
+    .topnav{
       max-width:800px;
       margin:0 auto 20px auto;
       display:flex;
@@ -29,19 +30,21 @@
       flex-wrap:wrap;
     }
 
-      .topnav a{
-       display:inline-block;
-       padding:10px 14px;
-       border-radius:10px;
-       background:#1f2937;
-       color:white;
+    .topnav a{
+      display:inline-block;
+      padding:10px 14px;
+      border-radius:10px;
+      background:#1f2937;
+      color:white;
       text-decoration:none;
       font-weight:700;
     }
-     .topnav a:hover{
+
+    .topnav a:hover{
       background:#374151;
     }
-   h1{
+
+    h1{
       margin-top:0;
       margin-bottom:10px;
     }
@@ -84,13 +87,19 @@
       border:1px solid #334155;
       background:#0f172a;
       color:white;
-      font-size:14px;
+      font-size:16px;
       box-sizing:border-box;
     }
 
+    input::placeholder,
+    textarea::placeholder{
+      color:#94a3b8;
+    }
+
     textarea{
-      min-height:110px;
-      resize:vertical;
+      min-height:90px;
+      resize:none;
+      line-height:1.5;
     }
 
     .actions{
@@ -139,17 +148,36 @@
     }
 
     @media (max-width:700px){
+      body{
+        padding:20px 14px;
+      }
+
+      .wrap{
+        padding:18px;
+      }
+
       .grid{
         grid-template-columns:1fr;
+      }
+
+      textarea{
+        min-height:80px;
+      }
+
+      button,
+      .secondary{
+        width:100%;
+        text-align:center;
       }
     }
   </style>
 </head>
 <body>
-<div class="topnav">
-  <a href="/">← Back to Home</a>
-  <a href="/admin/property-leads.html">Admin Leads</a>
-</div>
+  <div class="topnav">
+    <a href="/">← Back to Home</a>
+    <a href="/admin/property-leads.html">Admin Leads</a>
+  </div>
+
   <div class="wrap">
     <h1>Add Property</h1>
     <p>Submit your property to begin the Prorai8 review process.</p>
@@ -179,6 +207,16 @@
         <div class="field">
           <label for="city">City</label>
           <input type="text" id="city" required />
+        </div>
+
+        <div class="field">
+          <label for="state">State</label>
+          <input type="text" id="state" required />
+        </div>
+
+        <div class="field">
+          <label for="zipCode">Zip Code</label>
+          <input type="text" id="zipCode" required />
         </div>
 
         <div class="field">
@@ -238,7 +276,7 @@
 
         <div class="field full">
           <label for="notes">Notes</label>
-          <textarea id="notes" placeholder="Parking, near hospital, utilities included, private setup, availability, etc."></textarea>
+          <textarea id="notes" placeholder="Parking, near hospital, utilities included, private entrance, availability..."></textarea>
         </div>
       </div>
 
@@ -266,6 +304,8 @@
         email: document.getElementById("email").value.trim(),
         address: document.getElementById("address").value.trim(),
         city: document.getElementById("city").value.trim(),
+        state: document.getElementById("state").value.trim(),
+        zipCode: document.getElementById("zipCode").value.trim(),
         propertyType: document.getElementById("propertyType").value,
         beds: document.getElementById("beds").value,
         baths: document.getElementById("baths").value,
