@@ -1,0 +1,941 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Prorai8 for Renters | Mid-Term Rentals, Travel Nurse Housing, and Private Rooms</title>
+  <meta name="description" content="Search furnished rentals, private rooms, and mid-term housing with Prorai8. Designed for travel nurses, professionals, and renters who want a simpler process." />
+  <style>
+    :root{
+      --bg:#f8fbff;
+      --panel:#ffffff;
+      --panel-soft:#f8fafc;
+      --text:#0f172a;
+      --muted:#64748b;
+      --line:#e2e8f0;
+      --brand:#2563eb;
+      --brand-dark:#1d4ed8;
+      --dark:#0f172a;
+      --shadow:0 20px 50px rgba(2,6,23,.10);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color:var(--text);
+      background:linear-gradient(180deg,#eef4ff 0%, #f7fbff 40%, #ffffff 100%);
+    }
+
+    a{text-decoration:none;color:inherit}
+    button,input,select{font:inherit}
+
+    .container{
+      width:min(1180px, calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:100;
+      backdrop-filter:blur(10px);
+      background:rgba(255,255,255,.84);
+      border-bottom:1px solid rgba(226,232,240,.9);
+    }
+
+    .nav-inner{
+      min-height:76px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+    }
+
+    .brand-mark{
+      width:40px;
+      height:40px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      color:#fff;
+      font-weight:900;
+      background:linear-gradient(135deg,var(--brand),#60a5fa);
+      box-shadow:0 10px 24px rgba(37,99,235,.28);
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .nav-links a{
+      padding:10px 14px;
+      border-radius:999px;
+      color:#334155;
+      font-weight:600;
+    }
+
+    .nav-links a:hover{
+      background:#eff6ff;
+      color:var(--brand);
+    }
+
+    .nav-cta{
+      background:var(--brand);
+      color:#fff !important;
+      box-shadow:0 10px 24px rgba(37,99,235,.20);
+    }
+
+    .hero{
+      padding:44px 0 26px;
+    }
+
+    .hero-wrap{
+      display:grid;
+      grid-template-columns:1.08fr .92fr;
+      gap:24px;
+      align-items:stretch;
+    }
+
+    .hero-main{
+      background:linear-gradient(180deg,#0f172a 0%, #162237 100%);
+      color:#fff;
+      border-radius:32px;
+      padding:34px;
+      box-shadow:0 28px 60px rgba(15,23,42,.22);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero-main::after{
+      content:"";
+      position:absolute;
+      right:-80px;
+      bottom:-80px;
+      width:220px;
+      height:220px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(96,165,250,.30), transparent 70%);
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border-radius:999px;
+      padding:8px 12px;
+      background:rgba(255,255,255,.08);
+      color:#dbeafe;
+      font-size:13px;
+      font-weight:800;
+    }
+
+    h1{
+      margin:18px 0 12px;
+      font-size:clamp(36px,5vw,60px);
+      line-height:1.02;
+      letter-spacing:-1.7px;
+    }
+
+    .hero-main p{
+      margin:0;
+      color:#cbd5e1;
+      font-size:18px;
+      line-height:1.65;
+      max-width:720px;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:24px;
+    }
+
+    .btn{
+      min-height:50px;
+      padding:0 18px;
+      border:none;
+      border-radius:16px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg,#3b82f6,#2563eb);
+      color:#fff;
+      box-shadow:0 14px 30px rgba(37,99,235,.28);
+    }
+
+    .btn-primary:hover{transform:translateY(-1px)}
+
+    .btn-secondary{
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.14);
+    }
+
+    .hero-stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-top:24px;
+    }
+
+    .stat{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:22px;
+      margin-bottom:4px;
+    }
+
+    .stat span{
+      color:#cbd5e1;
+      font-size:13px;
+    }
+
+    .search-panel{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:30px;
+      padding:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .search-panel h2{
+      margin:0 0 8px;
+      font-size:28px;
+      letter-spacing:-.7px;
+    }
+
+    .search-panel p{
+      margin:0 0 18px;
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .search-grid{
+      display:grid;
+      gap:12px;
+    }
+
+    .field{
+      display:grid;
+      gap:8px;
+    }
+
+    .field label{
+      font-size:14px;
+      font-weight:700;
+      color:#334155;
+    }
+
+    .field input,
+    .field select{
+      width:100%;
+      min-height:54px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:#fff;
+      padding:0 14px;
+      outline:none;
+    }
+
+    .field input:focus,
+    .field select:focus{
+      border-color:#93c5fd;
+      box-shadow:0 0 0 4px rgba(37,99,235,.08);
+    }
+
+    .section{
+      padding:30px 0 8px;
+    }
+
+    .section-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+
+    .section-head h3{
+      margin:0;
+      font-size:30px;
+      letter-spacing:-.8px;
+    }
+
+    .section-head p{
+      margin:6px 0 0;
+      color:var(--muted);
+      line-height:1.7;
+      max-width:760px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:16px;
+    }
+
+    .card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+
+    .card h4{
+      margin:12px 0 8px;
+      font-size:21px;
+      letter-spacing:-.3px;
+    }
+
+    .card p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .icon{
+      width:52px;
+      height:52px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      background:#eff6ff;
+      font-size:24px;
+    }
+
+    .listing-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+    }
+
+    .listing-card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      transition:.18s ease;
+    }
+
+    .listing-card:hover{
+      transform:translateY(-2px);
+    }
+
+    .listing-image{
+      aspect-ratio: 16 / 10;
+      background:
+        linear-gradient(135deg, rgba(37,99,235,.18), rgba(15,23,42,.08)),
+        linear-gradient(180deg,#dbeafe,#eff6ff);
+      display:flex;
+      align-items:flex-end;
+      padding:16px;
+      color:#0f172a;
+      font-weight:800;
+      font-size:14px;
+    }
+
+    .listing-body{
+      padding:18px;
+    }
+
+    .listing-title{
+      margin:0 0 6px;
+      font-size:20px;
+      letter-spacing:-.3px;
+    }
+
+    .listing-sub{
+      margin:0 0 12px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .listing-price{
+      font-size:24px;
+      font-weight:900;
+      margin-bottom:12px;
+      letter-spacing:-.7px;
+    }
+
+    .meta{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+
+    .tag{
+      padding:8px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+      background:#eff6ff;
+      color:#1d4ed8;
+      border:1px solid #dbeafe;
+    }
+
+    .listing-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .mini-btn{
+      min-height:42px;
+      padding:0 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:#0f172a;
+      font-weight:800;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .mini-btn.primary{
+      background:var(--brand);
+      color:#fff;
+      border-color:var(--brand);
+    }
+
+    .steps{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+    }
+
+    .step{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:20px;
+    }
+
+    .step-num{
+      width:38px;
+      height:38px;
+      border-radius:999px;
+      background:var(--brand);
+      color:#fff;
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      margin-bottom:16px;
+      box-shadow:0 10px 20px rgba(37,99,235,.20);
+    }
+
+    .step h4{
+      margin:0 0 8px;
+      font-size:20px;
+    }
+
+    .step p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .dark-panel{
+      background:linear-gradient(180deg,#0f172a,#162237);
+      color:#fff;
+      border-radius:28px;
+      padding:26px;
+      box-shadow:0 28px 60px rgba(15,23,42,.22);
+    }
+
+    .dark-panel h4{
+      margin:0 0 12px;
+      font-size:28px;
+      letter-spacing:-.7px;
+    }
+
+    .dark-panel p{
+      margin:0;
+      color:#cbd5e1;
+      line-height:1.7;
+    }
+
+    .dark-list{
+      display:grid;
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .dark-list div{
+      padding:14px 16px;
+      border-radius:18px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      color:#e2e8f0;
+    }
+
+    .cta-wrap{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      align-items:stretch;
+    }
+
+    .footer{
+      padding:36px 0 60px;
+      color:#64748b;
+      font-size:14px;
+    }
+
+    .footer-box{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    @media (max-width: 1024px){
+      .hero-wrap,
+      .grid-3,
+      .grid-2,
+      .listing-grid,
+      .steps,
+      .cta-wrap{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 720px){
+      .nav-inner{
+        min-height:auto;
+        padding:14px 0;
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .hero-stats{
+        grid-template-columns:1fr;
+      }
+
+      .hero-main,
+      .search-panel,
+      .card,
+      .listing-card,
+      .step,
+      .dark-panel,
+      .footer-box{
+        border-radius:22px;
+      }
+
+      h1{
+        font-size:40px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="/">
+        <div class="brand-mark">P8</div>
+        <div>Prorai8</div>
+      </a>
+
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/owners.html">Owners</a>
+        <a href="/renters.html">Renters</a>
+        <a href="/rentals.html">Rentals</a>
+        <a href="/roi.html">ROI Calculator</a>
+        <a href="/legal/">Legal</a>
+        <a class="nav-cta" href="/rentals.html">Browse Rentals</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container hero-wrap">
+      <section class="hero-main">
+        <div class="eyebrow">Prorai8 for Renters • Clear mid-term housing</div>
+        <h1>Find calmer rentals without the chaos.</h1>
+        <p>
+          Prorai8 is built for renters who want a cleaner search experience for mid-term stays,
+          private rooms, executive housing, and travel nurse-friendly rentals. Browse properties,
+          review the essentials clearly, and apply through a more guided platform flow.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#featured-rentals">Explore Rentals</a>
+          <a class="btn btn-secondary" href="#how-it-works">How It Works</a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat">
+            <strong>Mid-term friendly</strong>
+            <span>Great for 30+ day stays and flexible needs</span>
+          </div>
+          <div class="stat">
+            <strong>Clear listings</strong>
+            <span>Price, amenities, and fit shown more simply</span>
+          </div>
+          <div class="stat">
+            <strong>Guided applying</strong>
+            <span>Search, review, and apply in one flow</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="search-panel">
+        <h2>Start your rental search</h2>
+        <p>
+          Search by city, neighborhood, or renter need. This is the kind of flow that helps renters
+          move faster without getting buried in confusing filters.
+        </p>
+
+        <div class="search-grid">
+          <div class="field">
+            <label for="destination">Where do you want to stay?</label>
+            <input id="destination" type="text" placeholder="Fresno, CA">
+          </div>
+
+          <div class="field">
+            <label for="budget">Monthly budget</label>
+            <select id="budget">
+              <option>Select monthly budget</option>
+              <option>Under $1,000</option>
+              <option>$1,000 – $1,500</option>
+              <option>$1,500 – $2,000</option>
+              <option>$2,000 – $2,500</option>
+              <option>$2,500+</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="fit">Best fit</label>
+            <select id="fit">
+              <option>Select renter type</option>
+              <option>Travel nurse</option>
+              <option>Executive stay</option>
+              <option>Private room</option>
+              <option>Family housing</option>
+              <option>General renter</option>
+            </select>
+          </div>
+
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:4px;">
+            <a class="btn btn-primary" href="/rentals.html">Browse All Rentals</a>
+            <a class="btn" href="#featured-rentals" style="border:1px solid var(--line);background:#fff;">See Featured Listings</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h3>What makes Prorai8 better for renters</h3>
+            <p>
+              Many rental platforms feel crowded, repetitive, or unclear. Prorai8 is designed to
+              make the essentials easier to understand, especially for renters looking for furnished,
+              private, or mid-term options.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card">
+            <div class="icon">🏠</div>
+            <h4>Clearer listing details</h4>
+            <p>
+              See the information that matters most first: city, price, beds, baths, privacy setup,
+              and what kind of renter the property fits best.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">🧳</div>
+            <h4>Better for mid-term stays</h4>
+            <p>
+              Designed for monthly housing, relocation, executive stays, and travel nurse-style
+              demand rather than only tourist-style short stays.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">🛡️</div>
+            <h4>More guided process</h4>
+            <p>
+              Instead of jumping between random links and messages, renters can move through a more
+              structured search and application experience.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="featured-rentals">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h3>Featured rentals</h3>
+            <p>
+              These are example renter-facing listings. Later, this section can be fed by real owner
+              submissions from your add-property flow.
+            </p>
+          </div>
+        </div>
+
+        <div class="listing-grid">
+          <article class="listing-card">
+            <div class="listing-image">Featured near hospital access</div>
+            <div class="listing-body">
+              <h4 class="listing-title">Private Suite Near Medical Center</h4>
+              <p class="listing-sub">Fresno, CA • 1 Bed • 1 Bath</p>
+              <div class="listing-price">$1,850 / month</div>
+              <div class="meta">
+                <span class="tag">Private Bath</span>
+                <span class="tag">Furnished</span>
+                <span class="tag">Travel Nurse Fit</span>
+              </div>
+              <div class="listing-actions">
+                <a class="mini-btn primary" href="/listing/sample-listing.html">View Listing</a>
+                <a class="mini-btn" href="/contact.html">Ask About This</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="listing-card">
+            <div class="listing-image">Flexible executive housing</div>
+            <div class="listing-body">
+              <h4 class="listing-title">Modern 2BR Executive Stay</h4>
+              <p class="listing-sub">Clovis, CA • 2 Bed • 2 Bath</p>
+              <div class="listing-price">$2,450 / month</div>
+              <div class="meta">
+                <span class="tag">Executive Stay</span>
+                <span class="tag">Parking</span>
+                <span class="tag">Furnished</span>
+              </div>
+              <div class="listing-actions">
+                <a class="mini-btn primary" href="/listing/sample-listing.html">View Listing</a>
+                <a class="mini-btn" href="/contact.html">Ask About This</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="listing-card">
+            <div class="listing-image">Calm room rental option</div>
+            <div class="listing-body">
+              <h4 class="listing-title">Private Room With Separate Entrance</h4>
+              <p class="listing-sub">Hanford, CA • Room Rental</p>
+              <div class="listing-price">$1,050 / month</div>
+              <div class="meta">
+                <span class="tag">Private Entrance</span>
+                <span class="tag">Quiet Setup</span>
+                <span class="tag">Mid-Term Ready</span>
+              </div>
+              <div class="listing-actions">
+                <a class="mini-btn primary" href="/listing/sample-listing.html">View Listing</a>
+                <a class="mini-btn" href="/contact.html">Ask About This</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="how-it-works">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h3>How renting through Prorai8 should work</h3>
+            <p>
+              The renter side should feel calm and understandable. This gives Prorai8 a cleaner
+              marketplace loop and helps avoid the confusion many large platforms create.
+            </p>
+          </div>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <h4>Browse clearly</h4>
+            <p>
+              Search properties by city, fit, and monthly budget without getting lost in a cluttered
+              interface.
+            </p>
+          </div>
+
+          <div class="step">
+            <div class="step-num">2</div>
+            <h4>Review the details</h4>
+            <p>
+              Understand what the property offers, who it fits best, and whether the location,
+              setup, and price work for your situation.
+            </p>
+          </div>
+
+          <div class="step">
+            <div class="step-num">3</div>
+            <h4>Apply inside Prorai8</h4>
+            <p>
+              Move into a cleaner renter flow for questions, applications, documents, and approval
+              steps.
+            </p>
+          </div>
+
+          <div class="step">
+            <div class="step-num">4</div>
+            <h4>Stay organized</h4>
+            <p>
+              Later, your renter dashboard can track saved listings, applications, payments, and
+              lease-related records in one place.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container cta-wrap">
+        <div class="dark-panel">
+          <h4>Who Prorai8 is especially good for</h4>
+          <p>
+            Prorai8 is a strong fit for renters who need more than a basic apartment search. The
+            system works particularly well for people looking for monthly, furnished, or flexible
+            housing options.
+          </p>
+
+          <div class="dark-list">
+            <div>Travel nurses and healthcare professionals</div>
+            <div>Corporate relocation and executive stays</div>
+            <div>Monthly private room renters</div>
+            <div>People who want a calmer application process</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="icon">📩</div>
+          <h4>Need help finding the right rental?</h4>
+          <p>
+            If you are not sure which listing type fits best, contact Prorai8 and describe what you
+            need. Later, this can become a guided renter intake flow.
+          </p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px;">
+            <a class="btn btn-primary" href="/contact.html">Contact Prorai8</a>
+            <a class="btn" href="/rentals.html" style="border:1px solid var(--line);background:#fff;">Browse Rentals</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h3>What comes next for the renter side</h3>
+            <p>
+              This page is the renter front door. Later, it can connect to renter dashboards,
+              applications, saved properties, messaging, and payment tracking.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <div class="icon">💾</div>
+            <h4>Saved listings</h4>
+            <p>
+              Renters should be able to save properties and come back later without restarting the
+              search every time.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">📝</div>
+            <h4>Application tracking</h4>
+            <p>
+              Later, renters can view application status, document requests, and next steps inside
+              their dashboard.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">💬</div>
+            <h4>Messaging flow</h4>
+            <p>
+              A protected communication layer can help renters ask questions without pushing every
+              interaction off-platform immediately.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">📂</div>
+            <h4>Lease and records</h4>
+            <p>
+              Over time, Prorai8 can store renter-facing records like lease summaries, deposits,
+              payment history, and move-in details.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-box">
+        <div>
+          <strong style="display:block;color:#0f172a;margin-bottom:6px;">Prorai8 for Renters</strong>
+          Mid-term and renter-friendly housing search with a calmer platform flow.
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="/rentals.html" class="btn" style="min-height:42px;border:1px solid var(--line);background:#fff;">Browse Rentals</a>
+          <a href="/contact.html" class="btn btn-primary" style="min-height:42px;">Contact Prorai8</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
