@@ -1,197 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Available Rentals | Prorai8</title>
-  <style>
-    body{
-      margin:0;
-      font-family:Arial, sans-serif;
-      background:#08111f;
-      color:white;
-      padding:30px 20px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    .wrap{
-      max-width:1200px;
-      margin:0 auto;
-    }
+<title>Available Rentals | Prorai8</title>
 
-    .topnav{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-bottom:24px;
-    }
+<style>
 
-    .topnav a{
-      display:inline-block;
-      padding:10px 14px;
-      border-radius:10px;
-      background:#1f2937;
-      color:white;
-      text-decoration:none;
-      font-weight:700;
-    }
+body{
+font-family:Arial, sans-serif;
+background:#f4f6fb;
+margin:0;
+}
 
-    .topnav a:hover{
-      background:#374151;
-    }
+.container{
+max-width:1200px;
+margin:auto;
+padding:40px 20px;
+}
 
-    h1{
-      margin:0 0 10px;
-      font-size:42px;
-    }
+h1{
+text-align:center;
+margin-bottom:40px;
+}
 
-    .sub{
-      color:#cbd5e1;
-      margin-bottom:30px;
-      line-height:1.6;
-    }
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:25px;
+}
 
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
-      gap:20px;
-    }
+.card{
+background:white;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+transition:0.2s;
+}
 
-    .card{
-      background:#111827;
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:18px;
-      overflow:hidden;
-      box-shadow:0 12px 30px rgba(0,0,0,0.30);
-    }
+.card:hover{
+transform:translateY(-5px);
+}
 
-    .photo{
-      height:180px;
-      background:linear-gradient(135deg,#1d4ed8,#60a5fa);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:18px;
-      font-weight:700;
-      color:white;
-    }
+.card img{
+width:100%;
+height:180px;
+object-fit:cover;
+}
 
-    .content{
-      padding:20px;
-    }
+.card-body{
+padding:18px;
+}
 
-    .address{
-      font-size:22px;
-      font-weight:800;
-      margin-bottom:6px;
-    }
+.title{
+font-size:18px;
+font-weight:bold;
+margin-bottom:5px;
+}
 
-    .city{
-      color:#94a3b8;
-      margin-bottom:14px;
-    }
+.location{
+color:#666;
+font-size:14px;
+margin-bottom:10px;
+}
 
-    .details{
-      color:#cbd5e1;
-      line-height:1.8;
-      font-size:14px;
-      margin-bottom:14px;
-    }
+.price{
+font-weight:bold;
+color:#2563eb;
+margin-bottom:12px;
+}
 
-    .price{
-      font-size:24px;
-      font-weight:800;
-      color:#60a5fa;
-      margin-bottom:16px;
-    }
+.btn{
+display:inline-block;
+padding:10px 14px;
+background:#2563eb;
+color:white;
+text-decoration:none;
+border-radius:8px;
+font-size:14px;
+}
 
-    .actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
+.btn:hover{
+background:#1d4ed8;
+}
 
-    .btn{
-      display:inline-block;
-      padding:10px 14px;
-      border-radius:10px;
-      text-decoration:none;
-      font-weight:700;
-    }
+</style>
 
-    .btn-primary{
-      background:#2563eb;
-      color:white;
-    }
-
-    .btn-secondary{
-      background:#1f2937;
-      color:white;
-    }
-
-    .empty{
-      background:#111827;
-      border-radius:16px;
-      padding:20px;
-      color:#cbd5e1;
-    }
-  </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="topnav">
-      <a href="/">← Back to Home</a>
-      <a href="/owner/add-property.html">+ Add Property</a>
-      <a href="/admin/property-leads.html">Admin Leads</a>
-    </div>
 
-    <h1>Available Rentals</h1>
-    <div class="sub">
-      Browse available Prorai8 properties.
-    </div>
+<div class="container">
 
-    <div id="listings" class="grid"></div>
-  </div>
+<h1>Available Rentals</h1>
 
-  <script>
-    const listings = JSON.parse(localStorage.getItem("propertyLeads") || "[]");
-    const container = document.getElementById("listings");
+<div class="grid">
 
-    const activeListings = listings.filter(item =>
-    item.status === "Listed"
-  );
-    if(activeListings.length === 0){
-      container.innerHTML = `<div class="empty">No properties listed yet.</div>`;
-    } else {
-      activeListings.forEach(p => {
-        const card = document.createElement("div");
-        card.className = "card";
+<!-- Property 1 -->
 
-        card.innerHTML = `
-          <div class="photo">Prorai8 Property</div>
-          <div class="content">
-            <div class="address">${p.address || "No address"}</div>
-            <div class="city">${p.city || ""}</div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1505691723518-36a5ac3b2d3c">
+<div class="card-body">
 
-            <div class="details">
-              <div><b>Type:</b> ${p.propertyType || "-"}</div>
-              <div><b>Bedrooms:</b> ${p.beds || "-"}</div>
-              <div><b>Bathrooms:</b> ${p.baths || "-"}</div>
-              <div><b>Furnished:</b> ${p.furnished || "-"}</div>
-              <div><b>Private Entrance:</b> ${p.privateEntrance || "-"}</div>
-              <div><b>Private Bathroom:</b> ${p.privateBathroom || "-"}</div>
-            </div>
-          
-            <div class="price">$${p.rent || "-"} / month</div>
-            <div class="actions">
-              <a class="btn btn-primary" href="/contact.html">Request Info</a>
-              <a class="btn btn-secondary" href="/owner/add-property.html">List Similar Property</a>
-            </div>
-          </div>
-        `;
+<div class="title">Private Room</div>
 
-        container.appendChild(card);
-      });
-    }
-  </script>
+<div class="location">Fresno, CA</div>
+
+<div class="price">$55 / night</div>
+
+<a href="/listing/sample-listing.html" class="btn">View Details</a>
+
+</div>
+</div>
+
+<!-- Property 2 -->
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1560448075-bb485b067938">
+<div class="card-body">
+
+<div class="title">Studio ADU</div>
+
+<div class="location">Clovis, CA</div>
+
+<div class="price">$85 / night</div>
+
+<a href="/listing/sample-listing.html" class="btn">View Details</a>
+
+</div>
+</div>
+
+<!-- Property 3 -->
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4">
+<div class="card-body">
+
+<div class="title">Private Room + Bath</div>
+
+<div class="location">Hanford, CA</div>
+
+<div class="price">$75 / night</div>
+
+<a href="/listing/sample-listing.html" class="btn">View Details</a>
+
+</div>
+</div>
+
+<!-- Property 4 -->
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1484154218962-a197022b5858">
+<div class="card-body">
+
+<div class="title">Guest Studio</div>
+
+<div class="location">Visalia, CA</div>
+
+<div class="price">$95 / night</div>
+
+<a href="/listing/sample-listing.html" class="btn">View Details</a>
+
+</div>
+</div>
+
+</div>
+
+</div>
+
 </body>
+
 </html>
