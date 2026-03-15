@@ -186,6 +186,7 @@
     }
 
     .btn-primary:hover{transform:translateY(-1px)}
+
     .btn-secondary{
       background:rgba(255,255,255,.08);
       color:#fff;
@@ -479,6 +480,56 @@
       box-shadow:0 0 0 4px rgba(37,99,235,.08);
     }
 
+    .choice-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+    }
+
+    .choice-card{
+      position:relative;
+      display:block;
+      padding:16px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fff;
+      cursor:pointer;
+      transition:.18s ease;
+      box-shadow:0 8px 18px rgba(2,6,23,.04);
+    }
+
+    .choice-card:hover{
+      border-color:#93c5fd;
+      transform:translateY(-2px);
+      box-shadow:0 14px 28px rgba(37,99,235,.08);
+    }
+
+    .choice-card input{
+      position:absolute;
+      opacity:0;
+      pointer-events:none;
+    }
+
+    .choice-title{
+      display:block;
+      font-weight:800;
+      color:#0f172a;
+      margin-bottom:6px;
+    }
+
+    .choice-text{
+      display:block;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .choice-card:has(input:checked){
+      border-color:#2563eb;
+      background:linear-gradient(180deg,#eff6ff,#ffffff);
+      box-shadow:0 16px 30px rgba(37,99,235,.12);
+    }
+
     .note{
       margin-top:14px;
       padding:14px 16px;
@@ -528,7 +579,8 @@
       }
 
       .hero-stats,
-      .form-grid{
+      .form-grid,
+      .choice-grid{
         grid-template-columns:1fr;
       }
 
@@ -771,98 +823,186 @@
     <section class="section">
       <div class="container highlight-wrap">
         <div class="dark-panel">
-          <h4>Why this matters</h4>
+          <h4>Why owners stay inside Prorai8</h4>
           <p>
-            If Prorai8 only introduces owners and renters, they can easily go around the platform.
-            But when the platform handles applications, approvals, records, and payments, staying
-            inside becomes the easier and safer path.
+            Prorai8 is not meant to feel like another listing form. The goal is to guide owners through
+            a smarter setup path — from strategy and positioning to applications, approvals, payments,
+            and ongoing operations.
           </p>
 
           <div class="dark-list">
-            <div>Keep application intake inside Prorai8</div>
-            <div>Delay direct contact until the process reaches the right stage</div>
-            <div>Use guided steps for approvals, payments, and operational records</div>
-            <div>Make the platform useful after the match, not only before it</div>
+            <div>Choose a rental direction that matches your market</div>
+            <div>Position the property before exposing direct contact details</div>
+            <div>Keep applications, screening, and decisions inside one flow</div>
+            <div>Move toward payments, tracking, and operations without chaos</div>
           </div>
         </div>
 
         <div class="form-card" id="owner-form">
-          <h4>Start your owner intake</h4>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;">
+            <div style="padding:8px 12px;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-weight:800;font-size:13px;">
+              AI-guided owner setup
+            </div>
+            <div style="padding:8px 12px;border-radius:999px;background:#f8fafc;border:1px solid var(--line);color:#475569;font-weight:700;font-size:13px;">
+              Step 1 of your owner flow
+            </div>
+          </div>
+
+          <h4>Start your property setup</h4>
           <p>
-            This form is the first entry point for owner onboarding. It can later connect to email,
-            CRM, database storage, or a full dashboard flow.
+            Tell Prorai8 what you’re listing and what outcome you want most. This helps shape a smarter
+            setup path instead of giving you a generic intake form.
           </p>
 
           <form action="https://formsubmit.co/contact@prorai8.com" method="POST">
-            <input type="hidden" name="_subject" value="New Owner Intake from Prorai8 Owners Page">
+            <input type="hidden" name="_subject" value="New Owner Setup from Prorai8">
             <input type="hidden" name="_captcha" value="false">
 
-            <div class="form-grid">
-              <div class="field">
-                <label for="fullName">Full name</label>
-                <input id="fullName" name="Full Name" type="text" placeholder="Owner full name" required>
-              </div>
+            <div class="field full" style="margin-bottom:14px;">
+              <label style="margin-bottom:10px;">What are you listing?</label>
+              <div class="choice-grid">
+                <label class="choice-card">
+                  <input type="radio" name="Property Type" value="Single-family home" required>
+                  <span class="choice-title">Single-family home</span>
+                  <span class="choice-text">A standard residential home for one household.</span>
+                </label>
 
-              <div class="field">
-                <label for="email">Email address</label>
-                <input id="email" name="Email" type="email" placeholder="owner@email.com" required>
-              </div>
+                <label class="choice-card">
+                  <input type="radio" name="Property Type" value="Apartment">
+                  <span class="choice-title">Apartment</span>
+                  <span class="choice-text">A unit inside a residential building or complex.</span>
+                </label>
 
-              <div class="field">
-                <label for="phone">Phone number</label>
-                <input id="phone" name="Phone" type="tel" placeholder="(555) 555-5555">
-              </div>
+                <label class="choice-card">
+                  <input type="radio" name="Property Type" value="Private room">
+                  <span class="choice-title">Private room</span>
+                  <span class="choice-text">A room rental inside a shared property.</span>
+                </label>
 
-              <div class="field">
-                <label for="propertyType">Property type</label>
-                <select id="propertyType" name="Property Type">
-                  <option value="">Select property type</option>
-                  <option>Single-family home</option>
-                  <option>Apartment</option>
-                  <option>Private room</option>
-                  <option>ADU / guest unit</option>
-                  <option>Multi-unit</option>
-                  <option>Other</option>
-                </select>
-              </div>
+                <label class="choice-card">
+                  <input type="radio" name="Property Type" value="ADU / guest unit">
+                  <span class="choice-title">ADU / guest unit</span>
+                  <span class="choice-text">A separate secondary unit or guest space.</span>
+                </label>
 
+                <label class="choice-card">
+                  <input type="radio" name="Property Type" value="Multi-unit">
+                  <span class="choice-title">Multi-unit</span>
+                  <span class="choice-text">More than one rentable unit under one property.</span>
+                </label>
+
+                <label class="choice-card">
+                  <input type="radio" name="Property Type" value="Other">
+                  <span class="choice-title">Other</span>
+                  <span class="choice-text">Something unique that needs a custom setup path.</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="field full" style="margin-bottom:14px;">
+              <label style="margin-bottom:10px;">What would you like Prorai8 to optimize?</label>
+              <div class="choice-grid">
+                <label class="choice-card">
+                  <input type="radio" name="Main Goal" value="Stable long-term renter" required>
+                  <span class="choice-title">Stable long-term renter</span>
+                  <span class="choice-text">Prioritize consistency and lower turnover.</span>
+                </label>
+
+                <label class="choice-card">
+                  <input type="radio" name="Main Goal" value="Higher monthly cash flow">
+                  <span class="choice-title">Higher monthly cash flow</span>
+                  <span class="choice-text">Push for stronger earning potential.</span>
+                </label>
+
+                <label class="choice-card">
+                  <input type="radio" name="Main Goal" value="Travel nurse or executive stay">
+                  <span class="choice-title">Travel nurse / executive stay</span>
+                  <span class="choice-text">Target mid-term professional demand.</span>
+                </label>
+
+                <label class="choice-card">
+                  <input type="radio" name="Main Goal" value="Need guidance first">
+                  <span class="choice-title">I need guidance first</span>
+                  <span class="choice-text">Let Prorai8 help shape the best direction.</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="field full" style="margin-bottom:14px;">
+              <label style="margin-bottom:10px;">Which setup path feels closest?</label>
+              <div class="choice-grid">
+                <label class="choice-card">
+                  <input type="radio" name="Preferred Strategy" value="Long-term lease" required>
+                  <span class="choice-title">Long-term lease</span>
+                  <span class="choice-text">Traditional rental setup with a stable lease structure.</span>
+                </label>
+
+                <label class="choice-card">
+                  <input type="radio" name="Preferred Strategy" value="Mid-term executive stay">
+                  <span class="choice-title">Mid-term executive stay</span>
+                  <span class="choice-text">Flexible stays for professionals and relocations.</span>
+                </label>
+
+                <label class="choice-card">
+                  <input type="radio" name="Preferred Strategy" value="Travel nurse housing">
+                  <span class="choice-title">Travel nurse housing</span>
+                  <span class="choice-text">Healthcare-focused furnished housing demand.</span>
+                </label>
+
+                <label class="choice-card">
+                  <input type="radio" name="Preferred Strategy" value="Hybrid / flexible model">
+                  <span class="choice-title">Hybrid / flexible model</span>
+                  <span class="choice-text">Adapt the property around demand and seasonality.</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-grid" style="margin-top:18px;">
               <div class="field full">
                 <label for="address">Property address</label>
                 <input id="address" name="Property Address" type="text" placeholder="Street address, city, state">
               </div>
 
               <div class="field">
-                <label for="strategy">Preferred strategy</label>
-                <select id="strategy" name="Preferred Strategy">
-                  <option value="">Select a strategy</option>
-                  <option>Long-term lease</option>
-                  <option>Mid-term executive stay</option>
-                  <option>Travel nurse housing</option>
-                  <option>Hybrid / flexible model</option>
-                  <option>Not sure yet</option>
+                <label for="rentGoal">Monthly rent target</label>
+                <input id="rentGoal" name="Monthly Rent Target" type="text" placeholder="$2,200">
+              </div>
+
+              <div class="field">
+                <label for="timeline">When would you like to start?</label>
+                <select id="timeline" name="Start Timeline">
+                  <option value="">Select timeline</option>
+                  <option>Immediately</option>
+                  <option>Within 30 days</option>
+                  <option>Within 60 days</option>
+                  <option>Just exploring options</option>
                 </select>
               </div>
 
               <div class="field">
-                <label for="rentGoal">Target monthly rent</label>
-                <input id="rentGoal" name="Target Monthly Rent" type="text" placeholder="$2,200">
+                <label for="fullName">Your name</label>
+                <input id="fullName" name="Full Name" type="text" placeholder="Your full name" required>
+              </div>
+
+              <div class="field">
+                <label for="email">Best email</label>
+                <input id="email" name="Email" type="email" placeholder="you@email.com" required>
               </div>
 
               <div class="field full">
-                <label for="needs">What do you want help with?</label>
-                <textarea id="needs" name="Owner Needs" placeholder="Examples: listing setup, marketing, renter applications, background checks, rent collection, accounting visibility, executive stays, travel nurse housing..."></textarea>
+                <label for="notes">Anything important we should know?</label>
+                <textarea id="notes" name="Setup Notes" placeholder="Examples: furnished unit, near hospital, prefer fully managed workflow, want help with applications, want better pricing guidance..."></textarea>
               </div>
             </div>
 
-            <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;">
-              <button class="btn btn-primary" type="submit">Submit Owner Intake</button>
+            <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;">
+              <button class="btn btn-primary" type="submit">Generate My Setup Path</button>
               <a class="btn" href="/roi.html" style="border:1px solid var(--line);background:#fff;">Open ROI Calculator</a>
             </div>
 
             <div class="note">
-              This intake form currently sends submissions to your Prorai8 email routing setup. Later,
-              we can upgrade it to store owner records in a real database and connect it to a full
-              owner dashboard.
+              Prorai8 uses this information to guide the next owner steps around positioning, renter flow,
+              approvals, and operations. Later, this can connect to a real dashboard and owner workspace.
             </div>
           </form>
         </div>
