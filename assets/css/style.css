@@ -410,27 +410,26 @@ textarea {
 }
 /* FORM STYLING */
 
-input,
-select,
-textarea {
-  width: 100%;
-  padding: 16px;
-  border-radius: 16px;
-  border: 1px solid #334155;
-  background: #0b1530;
-  color: #ffffff;
-  font-size: 16px;
-  line-height: 1.5;
+input, select, textarea{
+  width:100%;
+  padding:12px 14px;
+  border-radius:10px;
+  border:1px solid #334155;
+  background:#0f172a;
+  color:white;
+  font-size:16px;
+  box-sizing:border-box;
 }
 
-input::placeholder,
-textarea::placeholder {
-  color: #94a3b8;
+textarea{
+  min-height:90px;
+  resize:none;
+  line-height:1.5;
 }
 
-textarea {
-  min-height: 140px;
-  resize: vertical;
+textarea::placeholder{
+  color:#94a3b8;
+}
 }
 
 /* MOBILE FIX FOR NOTES BOX */
